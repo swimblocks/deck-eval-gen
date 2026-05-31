@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Local secrets / agent state
+.env
+.claude/
+*.log
+
+# Generated PDFs
+output/
+cc2026/
+
+# Local input data — may contain PII (real officials' names). The tool reads
+# from a published Google Sheet URL at runtime; a local CSV is for offline
+# development only and must not be committed.
+officials.csv
+*.csv
