@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "competition_name": "Autumn Opener 2026",
+  "competition_coordinator": "Alex Aspen",
+  "sessions": [
+    {
+      "number": 1,
+      "date": "2026-10-03",
+      "label": "Session 1",
+      "officials": [
+        {"name": "Blake Birch",     "position": "Session Referee",    "club": "TSC"},
+        {"name": "Casey Cedar",     "position": "Starter",                          "deck_eval": true},
+        {"name": "Emery Elm",       "position": "Stroke Judge",       "club": "BBST", "deck_eval": true},
+        {"name": "Gray Gum",        "position": "Inspector of Turns", "lane": "1",    "deck_eval": true},
+        {"name": "Harper Hemlock",  "position": "Inspector of Turns"},
+        {"name": "Jamie Juniper",   "position": "Timer",              "lane": "3",    "deck_eval": true}
+      ]
+    },
+    {
+      "number": 2,
+      "date": "2026-10-04",
+      "label": "Session 2",
+      "officials": [
+        {"name": "Blake Birch",   "position": "Session Referee", "club": "TSC"},
+        {"name": "Drew Dogwood",  "position": "Starter",                            "deck_eval": true},
+        {"name": "Finley Fir",    "position": "Stroke Judge",    "club": "MSSAC"},
+        {"name": "Indigo Ivy",    "position": "Inspector of Turns",                 "deck_eval": true},
+        {"name": "Jamie Juniper", "position": "Timer", "club": "TSC", "lane": "3",  "deck_eval": true}
+      ]
+    }
+  ]
+}
