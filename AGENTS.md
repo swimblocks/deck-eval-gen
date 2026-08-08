@@ -53,6 +53,14 @@ annotations, free-text session headers — inside it.
   suffix; nothing else depends on it yet.
 - **9 officials per page** is baked into the form template and `pdf.ROWS_PER_PAGE`. If the
   blank form ever changes, update both ends.
+- **The mentor field is left blank on purpose.** The form names it
+  `Mentor Official  Session referee`, and the grid has a `Session Referee` position — so
+  prefilling it looks obvious, and an early README claimed we did. We don't. The person who
+  mentors and signs off is whoever is on deck, not necessarily the session referee, and a
+  wrong *printed* name is worse than a blank one: `deck-eval-parser` reads the printed value
+  as data rather than the handwriting beside it. Same reasoning for times-worked, level and
+  sign-off. If it ever becomes wanted it is a feature with a decision behind it, not a
+  missing line in `_build_fields`.
 - **Annotation parsing is hand-tuned.** `parse_name_and_club` knows that
   `Jane Doe (BBST) (DE)` means name=Jane Doe, club=BBST, deck-eval=yes; and ignores
   `DE`, `Shadow`, `RCR`, country codes, `Lane N`, `#REF!`. New annotations a meet introduces
