@@ -1,2 +1,4 @@
-pymupdf>=1.23.0
-requests>=2.31.0
+# Runtime dependencies are declared in pyproject.toml, so they are also there
+# for anyone installing this as a library. Installing the package brings them
+# in; this file stays because CI and the org setup docs install through it.
+-e .

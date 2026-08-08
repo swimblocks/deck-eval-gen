@@ -16,8 +16,17 @@ venv/
 output/
 cc2026/
 
-# Local input data — may contain PII (real officials' names). The tool reads
-# from a published Google Sheet URL at runtime; a local CSV is for offline
-# development only and must not be committed.
+# Build artefacts
+build/
+dist/
+*.egg-info/
+
+# Local input data — may contain PII (real officials' names). A local CSV, from
+# a published Sheet or hand-written, is for offline development only and must
+# not be committed.
 officials.csv
 *.csv
+
+# …with one carve-out: test fixtures, which are synthetic by rule and have to
+# be in git for the tests to run. Nothing real goes in this directory.
+!tests/fixtures/*.csv

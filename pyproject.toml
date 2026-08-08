@@ -1,3 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deck-eval-gen"
+description = "Printable on-deck evaluation PDF forms from a swim meet officials grid."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dynamic = ["version"]
+authors = [{ name = "Gavin Bee" }]
+keywords = ["swimming", "officials", "deck-evaluation", "pdf"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business",
+]
+dependencies = [
+    "pymupdf>=1.23.0",
+    "requests>=2.31.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/swimblocks/deck-eval-gen"
+Issues = "https://github.com/swimblocks/deck-eval-gen/issues"
+
+[project.scripts]
+deck-eval-gen = "deck_eval_gen.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "deck_eval_gen.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# The blank Swim Ontario form ships inside the package: a library consumer has
+# no repo checkout to point --template at.
+[tool.setuptools.package-data]
+deck_eval_gen = ["eval_form.pdf"]
+
 [tool.ruff]
 line-length = 100
 target-version = "py312"
