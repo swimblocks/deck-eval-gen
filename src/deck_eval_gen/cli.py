@@ -3,10 +3,10 @@
 Three ways in, all producing the same grid model:
 
     deck-eval-gen <sheet_url>              published Google Sheet (needs network)
-    deck-eval-gen --grid-json grid.json    a grid document
-    deck-eval-gen --grid-csv grid.csv      a grid document as flat CSV
+    deck-eval-gen --grid-json grid.json    a grid
+    deck-eval-gen --grid-csv grid.csv      a grid as flat CSV
 
-See ``docs/grid-schema.md`` for the document schema.
+See ``docs/grid-schema.md`` for the schema.
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ def resolve_incomplete_names(grid: Grid) -> None:
     or "Harsh G" where the evaluation form wants a full name. Each distinct
     incomplete name is asked once and the answer applied everywhere.
 
-    Only worth doing for Sheet input: a grid document comes from a system that
+    Only worth doing for Sheet input: a grid comes from a system that
     knows officials' full names. The caller decides.
     """
     corrections: dict[str, str] = {}
@@ -49,7 +49,7 @@ def build_parser() -> argparse.ArgumentParser:
         description=(
             'Generate On-Deck Evaluation PDFs from a meet officials grid.\n'
             'Officials flagged for a deck evaluation are written into the output PDF(s).\n'
-            'Takes a published Google Sheet, or a grid document as JSON or CSV.'
+            'Takes a published Google Sheet, or a grid as JSON or CSV.'
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -62,13 +62,13 @@ def build_parser() -> argparse.ArgumentParser:
     source.add_argument(
         '--grid-json',
         metavar='PATH',
-        help="grid document as JSON; '-' reads stdin",
+        help="grid as JSON; '-' reads stdin",
     )
     source.add_argument(
         '--grid-csv',
         metavar='PATH',
         help=(
-            "grid document as flat CSV; '-' reads stdin. Also accepts a "
+            "grid as flat CSV; '-' reads stdin. Also accepts a "
             "published-sheet CSV export saved to a file"
         ),
     )

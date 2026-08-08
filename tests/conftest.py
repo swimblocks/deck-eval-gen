@@ -21,5 +21,5 @@ def sheet_export_rows(sheet_export_path) -> list[list[str]]:
 
 @pytest.fixture
 def grid_json_path() -> Path:
-    """The same grid, hand-written as a grid document."""
+    """The same grid, hand-written as a grid."""
     return FIXTURES / 'grid.json'

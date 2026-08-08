@@ -1,14 +1,14 @@
-# The grid document — `deck-eval-gen`'s input contract
+# The grid — `deck-eval-gen`'s input contract
 
 **Schema version: 1.**
 
-A *grid document* describes one meet's officials grid: the competition, its
+A *grid* is one meet's officials: the competition, its
 sessions, who is assigned to which position in each, and which of those
 assignments have been flagged for a deck evaluation. It is what this tool reads.
 
 Reading a published Google Sheet is one adapter that produces this shape, not
 the shape itself. Everything downstream — validation, pagination, the filled
-PDF — sees only the document, so a form generated from JSON and one generated
+PDF — sees only the grid, so a form generated from JSON and one generated
 from the equivalent Sheet are identical by construction.
 
 [`officials-admin`](https://github.com/swimblocks/officials-admin) serves this
@@ -17,7 +17,7 @@ published interface**, not an internal refactor.
 
 ## Versioning
 
-`schema_version` is required, and a document declaring a version this package
+`schema_version` is required, and a grid declaring a version this package
 does not know is rejected rather than interpreted optimistically — a grid
 half-understood produces a form that looks right and is wrong.
 
@@ -59,13 +59,13 @@ half-understood produces a form that looks right and is wrong.
 | `competition_coordinator` | string | no | Printed on every form. |
 | `host_club` | string | no | Substituted for any official whose `club` is empty. Overridden by `--host-club`. |
 | `coc` | string | no | Chief of Officials Committee contact. Overridden by `--coc`. |
-| `sessions` | array | **yes** | Non-empty. Sorted by `number` on load, so document order does not matter. |
+| `sessions` | array | **yes** | Non-empty. Sorted by `number` on load, so the order they appear in does not matter. |
 
 ### Session
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `number` | integer ≥ 1 | **yes** | The session number as officials refer to it, and the one in the output filename. Unique within the document. Not a positional index: a grid may publish sessions 4 and 7 alone. |
+| `number` | integer ≥ 1 | **yes** | The session number as officials refer to it, and the one in the output filename. Unique within the grid. Not a positional index: a grid may publish sessions 4 and 7 alone. |
 | `date` | `YYYY-MM-DD` | no | The day the session swims. |
 | `label` | string | no | Defaults to `Session {number}`. |
 | `date_text` | string | no | See [below](#date_text). |
@@ -87,9 +87,9 @@ One entry per assignment, so an official working two sessions appears twice.
 strings, so the JSON and CSV encodings agree. Anything else is an error rather
 than a falsy guess.
 
-### Unflagged assignments belong in the document
+### Unflagged assignments belong in the grid
 
-The document describes the whole grid, and the PDF writer selects the flagged
+The grid holds every assignment, and the PDF writer selects the flagged
 rows from it. Filtering earlier would make this schema unable to represent a
 grid — which is what `officials-admin` needs to serve.
 
@@ -103,7 +103,7 @@ absent. **A new integration should send `date`.**
 
 ## CSV
 
-The same document, one row per assignment, meet-level fields repeated. Chosen
+The same grid, one row per assignment, meet-level fields repeated. Chosen
 over a preamble-plus-table layout because it is what a spreadsheet exports and
 what fill-down produces by hand.
 
@@ -130,9 +130,9 @@ two are told apart by shape (the Sheet layout has a header row whose second
 column is exactly `Position`), so working offline from a downloaded grid needs
 no special flag.
 
-## How the document reaches the form
+## How the grid reaches the form
 
-| Grid document | PDF form field | `deck-eval-parser` canonical name |
+| Grid field | PDF form field | `deck-eval-parser` canonical name |
 |---|---|---|
 | `competition_name` | `Competition Name` | `competition_name` |
 | `competition_coordinator` | `Competition Coordinator` | `competition_coordinator` |

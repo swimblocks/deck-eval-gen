@@ -45,12 +45,12 @@ the `deck_eval_gen` import are both available.
 ## Usage
 
 Three ways in. All of them produce the same
-[grid document](docs/grid-schema.md) internally, so they produce the same PDFs.
+[grid](docs/grid-schema.md) internally, so they produce the same PDFs.
 
 ```bash
 deck-eval-gen <sheet_url>              # published Google Sheet
-deck-eval-gen --grid-json grid.json    # a grid document
-deck-eval-gen --grid-csv grid.csv      # a grid document as flat CSV
+deck-eval-gen --grid-json grid.json    # a grid
+deck-eval-gen --grid-csv grid.csv      # a grid as flat CSV
 ```
 
 `python eval_gen.py …` still works and takes the same arguments.
@@ -60,13 +60,13 @@ deck-eval-gen --grid-csv grid.csv      # a grid document as flat CSV
 | Argument | Description |
 |---|---|
 | `url` | Published Google Sheet URL (shortener or direct). Must be published via *File > Share > Publish to web* — sharing is not enough. |
-| `--grid-json PATH` | Grid document as JSON. `-` reads stdin. |
-| `--grid-csv PATH` | Grid document as flat CSV. `-` reads stdin. Also accepts a published-sheet CSV export saved to a file. |
+| `--grid-json PATH` | The grid as JSON. `-` reads stdin. |
+| `--grid-csv PATH` | The grid as flat CSV. `-` reads stdin. Also accepts a published-sheet CSV export saved to a file. |
 | `--session N` / `-s N` | Generate only session N. Default: every session with flagged officials. |
 | `--output-dir DIR` / `-o DIR` | Where to write PDFs. Default: current directory. |
 | `--template PATH` / `-t PATH` | Blank eval form PDF. Default: the one shipped with the package. |
-| `--host-club NAME` | Host club. Used for officials whose club the grid does not note. Overrides the document. |
-| `--coc NAME` | Chief of Officials Committee contact for the COC field. Overrides the document. |
+| `--host-club NAME` | Host club. Used for officials whose club the grid does not note. Overrides the grid. |
+| `--coc NAME` | Chief of Officials Committee contact for the COC field. Overrides the grid. |
 | `--no-prompt` | Never ask about truncated names; print them as the grid has them. |
 
 Exactly one input is required. Giving two is an error rather than a silent
@@ -81,7 +81,7 @@ deck-eval-gen https://tinyurl.com/example-officials-grid \
   --coc "Jamie Sample" \
   --output-dir output
 
-# One session, from a grid document
+# One session, from a grid
 deck-eval-gen --grid-json grid.json --session 3 --output-dir output
 
 # Straight from an API
@@ -94,7 +94,7 @@ session's own number, which is the one on the grid.
 
 ## As a library
 
-The grid document is the contract, so a caller that already holds the grid
+The grid is the contract, so a caller that already holds the grid
 never touches a Sheet, the network, or a Google account:
 
 ```python
@@ -112,7 +112,7 @@ for session in grid.deck_eval_sessions:
 
 ## Input formats
 
-- **[`docs/grid-schema.md`](docs/grid-schema.md)** — the grid document, in JSON
+- **[`docs/grid-schema.md`](docs/grid-schema.md)** — the grid, in JSON
   and CSV. Versioned; read this before changing it.
 - **Published Sheet** — the legacy path, and the reason this tool exists. The
   grid layout is:

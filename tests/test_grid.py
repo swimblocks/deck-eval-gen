@@ -1,4 +1,4 @@
-"""Tests for the grid document: the model, its validation, and both codecs."""
+"""Tests for the grid: the model, its validation, and both codecs."""
 import csv
 import io
 import json
@@ -85,7 +85,7 @@ class TestGrid:
         grid = Grid(competition_name='M').with_defaults(host_club='Centennial', coc='Jane')
         assert (grid.host_club, grid.coc) == ('Centennial', 'Jane')
 
-    def test_caller_values_override_the_document(self):
+    def test_caller_values_override_the_grid(self):
         # A CLI flag is a deliberate act; the Sheet path has no other way in.
         grid = Grid(competition_name='M', host_club='Old', coc='Old')
         assert grid.with_defaults(host_club='New').host_club == 'New'
@@ -102,7 +102,7 @@ class TestGrid:
 # ---------------------------------------------------------------------------
 
 class TestGridFromDict:
-    def test_minimal_document(self):
+    def test_minimal_grid(self):
         grid = grid_from_dict(_doc())
         assert grid.competition_name == 'Autumn Opener 2026'
         assert grid.session(1).date == date(2026, 10, 3)

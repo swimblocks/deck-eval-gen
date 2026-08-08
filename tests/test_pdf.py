@@ -1,5 +1,5 @@
 """Tests for PDF output, including the criterion that made this change worth doing:
-a grid document and the equivalent published Sheet must produce identical forms.
+a grid and the equivalent published Sheet must produce identical forms.
 """
 from datetime import date
 
@@ -41,7 +41,7 @@ class TestJsonAndSheetAgree:
     """Identical PDFs from a JSON input and from the equivalent published Sheet.
 
     The two fixtures are written independently — ``sheet_export.csv`` in the
-    grid layout a Sheet exports, ``grid.json`` by hand as a grid document — so
+    grid layout a Sheet exports, ``grid.json`` by hand as a grid — so
     this compares two separate descriptions of one meet, not a value against
     itself.
     """

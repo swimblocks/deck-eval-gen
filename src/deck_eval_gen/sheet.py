@@ -263,7 +263,7 @@ def grid_from_sheet_rows(rows: list[list[str]]) -> Grid:
     """Parse published-Sheet CSV rows into a :class:`Grid`.
 
     Every assignment is retained, not just the ones flagged ``(DE)`` — the grid
-    document describes the whole grid, and the PDF writer selects the flagged
+    grid holds every assignment, and the PDF writer selects the flagged
     ones. Cells hold one official per line, so a two-timer lane is two entries
     in one cell.
     """

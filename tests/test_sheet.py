@@ -169,7 +169,7 @@ class TestGridFromSheetRows:
         assert grid.session(1).date_text == ''
 
     def test_unflagged_officials_are_retained(self, sheet_export_rows):
-        # The grid document describes the whole grid; the PDF writer selects
+        # The grid describes the whole grid; the PDF writer selects
         # the flagged rows. officials-admin serves this shape wholesale.
         grid = grid_from_sheet_rows(sheet_export_rows)
         names = [o.name for o in grid.session(1).officials]

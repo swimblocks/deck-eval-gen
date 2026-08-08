@@ -1,6 +1,6 @@
 """deck-eval-gen: printable on-deck evaluation forms from a meet officials grid.
 
-The library contract is the *grid document* — see :mod:`deck_eval_gen.grid` and
+The library contract is the *grid* — see :mod:`deck_eval_gen.grid` and
 ``docs/grid-schema.md``. A caller that already holds the grid (``officials-admin``
 serving ``/meets/{id}/grid.json``) builds the model and renders straight from it,
 with no Google account and no network:

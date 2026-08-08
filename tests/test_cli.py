@@ -115,7 +115,7 @@ class TestInputSelection:
         assert 'template PDF not found' in capsys.readouterr().err
 
     def test_structured_input_never_prompts(self, grid_json_path, tmp_path):
-        # A grid document comes from a system that knows full names, and a
+        # A grid comes from a system that knows full names, and a
         # library or CI caller has nobody at a keyboard to answer.
         with patch('builtins.input', side_effect=AssertionError('must not prompt')):
             assert main([

@@ -1,6 +1,6 @@
-"""The grid document: this package's input contract.
+"""The grid: this package's input contract.
 
-A *grid document* is a meet's officials grid — the competition, its sessions,
+A *grid* is one meet's officials: the competition, its sessions,
 who is assigned to which position in each, and which of those assignments have
 been flagged for a deck evaluation. It is the single in-memory model every
 input path produces and the PDF writer consumes, so a PDF generated from JSON
@@ -27,7 +27,7 @@ from typing import Any
 
 # Bumped only for a breaking change. Adding an optional field is additive and
 # does not bump it; removing or renaming one, or changing what a value means,
-# does. A document declaring a version this package does not know is rejected
+# does. A grid declaring a version this package does not know is rejected
 # rather than guessed at.
 SCHEMA_VERSION = 1
 
@@ -39,7 +39,7 @@ _DAY_ABBR = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
 
 
 class GridError(ValueError):
-    """A grid document is malformed, or declares an unsupported version."""
+    """A grid is malformed, or declares an unsupported version."""
 
 
 # ---------------------------------------------------------------------------
@@ -57,7 +57,7 @@ class Official:
     ``lane`` is the lane this assignment covers, as a string because grids
     write things like ``1`` for a timer and leave it blank for a starter. It is
     explicit here: the Sheet adapter derives it from the grid's sub-position
-    column, but a grid document states it outright.
+    column, but a grid states it outright.
     """
 
     name: str
@@ -117,7 +117,7 @@ class Session:
 class Grid:
     """A meet's officials grid.
 
-    ``host_club`` and ``coc`` are meet facts, so a grid document may carry
+    ``host_club`` and ``coc`` are meet facts, so a grid may carry
     them; both are also CLI flags, because the published Sheet has nowhere to
     record them. An explicitly supplied value wins — see :meth:`with_defaults`.
     """
@@ -144,7 +144,7 @@ class Grid:
     def with_defaults(self, host_club: str = '', coc: str = '') -> Grid:
         """Return a copy with *host_club* / *coc* filled in where non-empty.
 
-        The caller's values override what the document carries: a CLI flag is a
+        The caller's values override what the grid carries: a CLI flag is a
         deliberate act, and the Sheet path has no other way to supply them.
         """
         return Grid(
@@ -203,28 +203,28 @@ def _parse_bool(value: Any, where: str, key: str) -> bool:
 
 
 def grid_from_dict(doc: Any) -> Grid:
-    """Build a :class:`Grid` from a decoded grid document.
+    """Build a :class:`Grid` from a decoded grid.
 
     Raises :class:`GridError` with the offending location named, so a bad
-    document from an API response is diagnosable without a debugger.
+    grid from an API response is diagnosable without a debugger.
     """
-    doc = _require_mapping(doc, 'grid document')
+    doc = _require_mapping(doc, 'grid')
 
     declared = doc.get('schema_version')
     if declared is None:
         raise GridError(
-            "grid document: 'schema_version' is required "
+            "grid: 'schema_version' is required "
             f"(this package speaks version {SCHEMA_VERSION})"
         )
     if declared != SCHEMA_VERSION:
         raise GridError(
-            f"grid document: unsupported schema_version {declared!r}; "
+            f"grid: unsupported schema_version {declared!r}; "
             f"this package speaks version {SCHEMA_VERSION}"
         )
 
     raw_sessions = doc.get('sessions')
     if not isinstance(raw_sessions, list) or not raw_sessions:
-        raise GridError("grid document: 'sessions' must be a non-empty list")
+        raise GridError("grid: 'sessions' must be a non-empty list")
 
     sessions: list[Session] = []
     seen: set[int] = set()
@@ -264,16 +264,16 @@ def grid_from_dict(doc: Any) -> Grid:
 
     sessions.sort(key=lambda s: s.number)
     return Grid(
-        competition_name=_text(doc, 'competition_name', 'grid document', required=True),
-        competition_coordinator=_text(doc, 'competition_coordinator', 'grid document'),
-        host_club=_text(doc, 'host_club', 'grid document'),
-        coc=_text(doc, 'coc', 'grid document'),
+        competition_name=_text(doc, 'competition_name', 'grid', required=True),
+        competition_coordinator=_text(doc, 'competition_coordinator', 'grid'),
+        host_club=_text(doc, 'host_club', 'grid'),
+        coc=_text(doc, 'coc', 'grid'),
         sessions=sessions,
     )
 
 
 def grid_to_dict(grid: Grid) -> dict:
-    """Serialise *grid* back to a grid document. Round-trips through :func:`grid_from_dict`."""
+    """Serialise *grid* back to a grid. Round-trips through :func:`grid_from_dict`."""
     return {
         'schema_version': SCHEMA_VERSION,
         'competition_name': grid.competition_name,
@@ -303,7 +303,7 @@ def grid_to_dict(grid: Grid) -> dict:
 
 
 def load_grid_json(source: str | Path) -> Grid:
-    """Read a grid document from a JSON file path, or ``-`` for stdin."""
+    """Read a grid from a JSON file path, or ``-`` for stdin."""
     text = _read_text(source)
     try:
         doc = json.loads(text)

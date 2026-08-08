@@ -18,9 +18,9 @@ standards repo. Read these first:
 
 Everything below is **repo-specific** — quirks that the canonical guide doesn't cover.
 
-## The grid document is the contract
+## The grid is the contract
 
-Input is a **grid document**, documented and versioned in
+Input is a **grid**, documented and versioned in
 [`docs/grid-schema.md`](docs/grid-schema.md). Every input path produces that one model and
 the PDF writer consumes only it, which is what makes a form generated from JSON identical
 to one generated from the equivalent Sheet.
@@ -66,7 +66,7 @@ annotations, free-text session headers — inside it.
   web**, not just shared. This is a deliberate scope choice: the tool runs against a public
   artefact, not a permissioned one. Nothing else needs credentials at all.
 - **Tests never touch the network.** `tests/fixtures/` holds a synthetic Sheet export and
-  the equivalent grid document. `*.csv` is gitignored to keep real officials out of git —
+  the equivalent grid. `*.csv` is gitignored to keep real officials out of git —
   `tests/fixtures/*.csv` is the one carve-out, and it stays synthetic.
 
 ## Where to start reading
